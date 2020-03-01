@@ -16,12 +16,14 @@ class App extends React.Component {
 
 
   getRestaurants() {
-    axios.get('/restaurants').then((response) => {
-      console.log(response.data)
-      this.setState({
-        restaurants: response.data,
+    axios
+      .get('/restaurants')
+      .then((response) => {
+        console.log(response.data)
+        this.setState({
+          restaurants: response.data,
+        })
       })
-    })
   }
 
   /*
@@ -30,8 +32,11 @@ class App extends React.Component {
     rating: rating
   }
   */
-  deleteRestaurant({ name, rating }) {
-    // axios.delete('/restaurants/:id').then(()=>{})
+  deleteRestaurant(index) {
+    axios
+      .delete(`/restaurants/${index}`)
+      .then(() => this.getRestaurants())
+      .catch(err => console.error(err))
   }
 
   addRestaurant({ name, rating }) {
@@ -54,10 +59,12 @@ class App extends React.Component {
       <div className="body">
         <div className="heading">Welp!</div>
         {this.state.restaurants.length ?
-          <RestaurantList restaurants={this.state.restaurants} />
+          <RestaurantList
+          restaurants={this.state.restaurants}
+          deleteRestaurant={this.deleteRestaurant} />
           :
           <div className="error">Fix your get request!</div>}
-        <AddRestaurantForm addRestaurant={this.addRestaurant}/>
+        <AddRestaurantForm addRestaurant={this.addRestaurant} />
       </div>
     )
   }

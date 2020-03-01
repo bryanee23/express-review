@@ -6,10 +6,10 @@ const controllers = {
     res
       .status(200)
       .send(restaurants)
-      .end()
+      .end();
   },
   getOne: (req, res) => {
-    let restaurant = restaurants[req.params.id - 1];
+    let restaurant = restaurants[req.params.id];
     if (restaurant) {
       res
         .status(200)
@@ -19,7 +19,7 @@ const controllers = {
       res
         .status(404)
         .send(`${req.params.id} was not found`)
-        .end()
+        .end();
       //never leave a client haning during the TA
     }
   },
@@ -29,35 +29,34 @@ const controllers = {
     if (name !== undefined && rating !== undefined) {
       restaurants.push({
         restaurant_name: name,
-        rating: rating
-      })
+        rating: rating,
+      });
       res
         .status(201)
         .send(`Added ${name} to database with a ${rating} rating`)
-        .end()
+        .end();
     } else {
       res
         .status(404)
         .send(`Invalid format`)
-        .end()
+        .end();
     }
   },
   deleteOne: (req, res) => {
-    let restaurant = restaurants[req.params.id - 1]
-    if (restaurant) {
-      restaurants.splice(req.params.id - 1, 1)
+    let restaurant = restaurants[req.params.id];
+    if (!!restaurant) {
+      restaurants.splice(req.params.id, 1);
       res
         .status(200)
-        .send(`Removed restaurant at index ${req.params.id - 1}`)
-        .end()
+        .send(`Removed restaurant at index ${req.params.id}`)
+        .end();
     } else {
       res
         .status(404)
-        .send(`No restaurant at index ${req.params.id - 1}`)
-        .end()
+        .send(`No restaurant at index ${req.params.id}`)
+        .end();
     }
-
-  }
-}
+  },
+};
 
 module.exports = controllers;
