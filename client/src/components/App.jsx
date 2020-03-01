@@ -7,33 +7,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      restaurants: [
-        {
-          "id": 1,
-          "restaurant_name": "Howlin Rays",
-          "rating": 5
-        },
-        {
-          "id": 2,
-          "restaurant_name": "Mariscos Jalisco",
-          "rating": 5
-        },
-        {
-          "id": 3,
-          "restaurant_name": "Hummus Factory",
-          "rating": 4
-        },
-        {
-          "id": 4,
-          "restaurant_name": "Joy",
-          "rating": 4
-        },
-        {
-          "id": 5,
-          "restaurant_name": "Rustic Canyon",
-          "rating": 5
-        }
-      ]
+      restaurants: [],
     }
     this.getRestaurants = this.getRestaurants.bind(this);
     this.deleteRestaurant = this.deleteRestaurant.bind(this);
@@ -42,15 +16,32 @@ class App extends React.Component {
 
 
   getRestaurants() {
-    // TODO
+    axios.get('/restaurants').then((response) => {
+      console.log(response.data)
+      this.setState({
+        restaurants: response.data,
+      })
+    })
   }
 
-  deleteRestaurant() {
-    // TODO
+  /*
+  {
+    name: name,
+    rating: rating
+  }
+  */
+  deleteRestaurant({ name, rating }) {
+    // axios.delete('/restaurants/:id').then(()=>{})
   }
 
-  addRestaurant() {
-    // TODO
+  addRestaurant({ name, rating }) {
+    axios.post('/restaurants', {
+      name,
+      rating
+    })
+      .then(() => this.getRestaurants())
+      .catch(err => console.error(err))
+    //add .catch for the TA
   }
 
   componentDidMount() {
@@ -66,7 +57,7 @@ class App extends React.Component {
           <RestaurantList restaurants={this.state.restaurants} />
           :
           <div className="error">Fix your get request!</div>}
-        <AddRestaurantForm />
+        <AddRestaurantForm addRestaurant={this.addRestaurant}/>
       </div>
     )
   }
