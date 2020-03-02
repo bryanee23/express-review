@@ -17,8 +17,8 @@ class Form extends React.Component {
     })
   }
 
-  handleSubmit(props) {
-    this.props.addRestaurant(this.state)
+  handleSubmit() {
+    // TODO
   }
 
 
@@ -48,7 +48,7 @@ class Form extends React.Component {
               <option>5</option>
             </select>
           </div>
-          <div><button onClick={this.handleSubmit}>Submit</button></div>
+          <div><button>Submit</button></div>
         </div>
       </div>
     )
