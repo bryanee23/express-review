@@ -1,5 +1,12 @@
-var restaurants = require('../restaurants.js');
+var restaurants = require('../restaurants.json');
 
 const controllers = {
-  // TODO
-}
+  getAll: (req, res) => {
+    res
+      .status(200)
+      .send(restaurants)
+      .end();
+  },
+};
+
+module.exports = controllers;
